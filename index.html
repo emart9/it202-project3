@@ -131,6 +131,26 @@
                     astroid3.y = Math.floor((Math.random() * 360) + 1);
                     astroid3.x = 600;
                   }
+                
+                if (userPiece.x < astroid.x + 10 && userPiece.x + 10  > astroid.x &&
+		                userPiece.y < astroid.y + 10 && userPiece.y + 10 > astroid.y) {
+                    lives -= 1;
+                    astroid.x = 600;
+                }
+                if (userPiece.x < astroid2.x + 12 && userPiece.x + 12  > astroid2.x &&
+		                userPiece.y < astroid2.y + 12 && userPiece.y + 12 > astroid2.y) {
+                    lives -= 1;
+                    astroid2.x = 600;
+                }
+                if (userPiece.x < astroid3.x + 16 && userPiece.x + 16  > astroid3.x &&
+		                userPiece.y < astroid3.y + 16 && userPiece.y + 16 > astroid3.y) {
+                    lives -= 1;
+                    astroid3.x = 600;
+                }
+                
+                if(lives == 0){
+                    game.stop();
+                }
             }
             
             document.addEventListener("keydown", function(event) {               
