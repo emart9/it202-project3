@@ -15,7 +15,10 @@
         <p>Move using up/down arrows and pause with 'S' key and resume with 'R' key</p>
         <script>
             var userPiece;
+            var astroid;
             var width;
+            var lives = 3;
+            var score = 0;
             var height;
             var keyMap = {
                 38: 'up',
@@ -27,6 +30,12 @@
 
             function startGame() {
                 userPiece = new uPiece(75, 75, "images/spaceship_piece.gif", 0, 200, "image");
+                astroid = new uPiece(75, 75, "images/astroid.png", 600, 200, "image");
+                astroid2 = new uPiece(90, 90, "images/astroid.png", 600, 100, "image");
+                astroid3 = new uPiece(125, 125, "images/astroid.png", 600, 300, "image");
+
+
+                
                 game.start();   
             }
 
@@ -53,9 +62,7 @@
             
             function uPiece(width, height, path, xPos, yPos){
                 this.image = new Image(); 
-                this.image.src = "images/spaceship_piece.gif";
-                this.lives = 3;
-                this.score = 0; 
+                this.image.src = path; 
                 this.width = width;
                 this.height = height;
                 this.speedX = 0;
@@ -66,7 +73,7 @@
                     ctx = game.context;
                     ctx.fillStyle = "white";
                     ctx.font = "15px Comic Sans MS";
-                    ctx.fillText("Lives: " + this.lives + "  Score: " + this.score,450,20);
+                    ctx.fillText("Lives: " + lives + "  Score: " + score,450,20);
                     ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
                   }     
                 this.newPos = function() {
@@ -79,7 +86,46 @@
             function updateGame() {
                 game.clear();
                 userPiece.newPos();
+                astroid.newPos();
+                astroid2.newPos();
+                astroid3.newPos();
                 userPiece.update();
+                astroid.update();
+                astroid2.update();
+                astroid3.update();
+                if (score < 6){
+                    astroid.x -= 4;
+                }
+                else if(score < 18){
+                    astroid.x -= 6;
+                    astroid2.x -= 7;
+                }
+                else if(score < 35){
+                    astroid.x -= 10;
+                    astroid2.x -= 11;
+                    astroid3.x -= 12;
+                }
+                else {
+                    astroid.x -= 15;
+                    astroid2.x -= 16;
+                    astroid3.x -= 19;
+                }
+                  // handle edge condition
+                  if (astroid.x < 0) {
+                    score += 1;
+                    astroid.y = Math.floor((Math.random() * 400) + 1);
+                    astroid.x = 600;
+                  }
+                  if (astroid2.x < 0) {
+                    score += 1;
+                    astroid2.y = Math.floor((Math.random() * 400) + 1);
+                    astroid2.x = 600;
+                  }
+                  if (astroid3.x < 0) {
+                    score += 1;
+                    astroid3.y = Math.floor((Math.random() * 400) + 1);
+                    astroid3.x = 600;
+                  }
             }
             
             document.addEventListener("keydown", function(event) {               
