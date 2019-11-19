@@ -3,34 +3,92 @@
     <head>
         <title>Dodging Asteroids</title>
         
-        <style>
-            html, body {
-                padding: 10px;
-            }
-             canvas {
+         <style>
+            canvas {
                 background-image: url("images/space-background.png");
-                height: 70%;
-                width: 60%;
-            } 
-        </style>           
+            }             
+          </style>
     </head>
     
     
-    <body>
-        <canvas id="canvas" width="600 px" height="400 px"></canvas>
-        
+    <body onload="startGame()">
         <script>
-            
-            var canvas = document.getElementById("canvas");
-            var ctx = canvas.getContext("2d");
-            
-            var width;
-            var height;
-            
-            
+            var userPiece;
+            var width = 600;
+            var height = 400;
+            var keyMap = {
+                38: 'up',
+                40: 'down'
+            }
 
-        
-        
-        </script>        
+            function startGame() {
+                userPiece = new uPiece(75, 75, "images/spaceship_piece.gif", 0, 200, "image");
+                game.start();
+//                 window.requestAnimationFrame(updateGame);
+
+            }
+
+            var game = {
+                canvas : document.createElement("canvas"),
+                start : function() {
+                    this.canvas.width = 600;
+                    this.canvas.height = 400;
+                    this.context = this.canvas.getContext("2d");
+                    document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+                    this.frameNo = 0;
+                    this.interval = setInterval(updateGame, 20);
+                    },
+                clear : function() {
+                    this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                },
+                stop : function() {
+                    clearInterval(this.interval);
+                }
+            }
+            
+            function uPiece(width, height, path, xPos, yPos){
+                this.image = new Image(); 
+                this.image.src = "images/spaceship_piece.gif";
+                this.lives = 3;
+                this.score = 0; 
+                this.width = width;
+                this.height = height;
+                this.speedX = 0;
+                this.speedY = 0;    
+                this.x = xPos;
+                this.y = yPos;   
+                this.update = function() {
+                    ctx = game.context;
+                    ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+                  }     
+                this.newPos = function() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;        
+                }
+            }
+
+            
+            function updateGame() {
+                game.clear();
+                userPiece.newPos();
+                userPiece.update();
+//                 window.requestAnimationFrame(updateGame);
+            }
+            
+            function up() {
+                if(userPiece.y > 0)
+                    userPiece.speedY = -5; 
+            }
+
+            function down() {
+                if(userPiece.y < height)
+                    userPiece.speedY = 5; 
+            }
+            
+            function clearmove() {
+                userPiece.speedX = 0; 
+                userPiece.speedY = 0; 
+            }     
+        </script>         
     </body>
 </html>
