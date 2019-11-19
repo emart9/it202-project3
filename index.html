@@ -12,21 +12,22 @@
     
     
     <body onload="startGame()">
+        <p>Move using up/down arrows and pause with 'S' key and resume with 'R' key</p>
         <script>
             var userPiece;
             var width;
             var height;
             var keyMap = {
                 38: 'up',
-                40: 'down'
+                40: 'down',
+                83: 'pause',
+                82: 'resume'
             }
             var keyDown = false;
 
             function startGame() {
                 userPiece = new uPiece(75, 75, "images/spaceship_piece.gif", 0, 200, "image");
-                game.start();
-//                 window.requestAnimationFrame(updateGame);
-
+                game.start();   
             }
 
             var game = {
@@ -79,7 +80,6 @@
                 game.clear();
                 userPiece.newPos();
                 userPiece.update();
-//                 window.requestAnimationFrame(updateGame);
             }
             
             document.addEventListener("keydown", function(event) {               
@@ -89,6 +89,12 @@
                 }
                 else if(key == 'down'){
                    down();
+                }
+                else if(key == 'pause'){
+                    game.stop();
+                }
+                else if(key == 'resume'){
+                    game.start();
                 }
             })
             
