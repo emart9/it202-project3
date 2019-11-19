@@ -14,12 +14,13 @@
     <body onload="startGame()">
         <script>
             var userPiece;
-            var width = 600;
-            var height = 400;
+            var width;
+            var height;
             var keyMap = {
                 38: 'up',
                 40: 'down'
             }
+            var keyDown = false;
 
             function startGame() {
                 userPiece = new uPiece(75, 75, "images/spaceship_piece.gif", 0, 200, "image");
@@ -32,7 +33,10 @@
                 canvas : document.createElement("canvas"),
                 start : function() {
                     this.canvas.width = 600;
+                    width = this.canvas.width;
                     this.canvas.height = 400;
+                    height = this.canvas.height; 
+                    
                     this.context = this.canvas.getContext("2d");
                     document.body.insertBefore(this.canvas, document.body.childNodes[0]);
                     this.frameNo = 0;
@@ -87,19 +91,25 @@
             
             document.addEventListener("keyup", function(event) {    
                 userPiece.speedY = 0;
+                console.log(height);
+                console.log(userPiece.y);
             })
             
             
             
             function up() {
-                if(userPiece.y > 0){
-                    userPiece.speedY = -5; 
+                userPiece.speedY = -4;
+                if (userPiece.y < -25) {
+                    userPiece.y += 400;
                 }
+                
             }
 
             function down() {
-                if(userPiece.y < height)
-                    userPiece.speedY = 5; 
+                userPiece.speedY = 4; 
+                if (userPiece.y > 350) {
+                    userPiece.y -= 390;
+                }
             }
             
             function clearmove() {
