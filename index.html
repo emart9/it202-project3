@@ -75,9 +75,26 @@
 //                 window.requestAnimationFrame(updateGame);
             }
             
+            document.addEventListener("keydown", function(event) {               
+                var key = keyMap[event.keyCode]
+                if(key == 'up'){
+                   up();
+                }
+                else if(key == 'down'){
+                   down();
+                }
+            })
+            
+            document.addEventListener("keyup", function(event) {    
+                userPiece.speedY = 0;
+            })
+            
+            
+            
             function up() {
-                if(userPiece.y > 0)
+                if(userPiece.y > 0){
                     userPiece.speedY = -5; 
+                }
             }
 
             function down() {
