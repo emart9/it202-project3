@@ -144,12 +144,15 @@
                 }
                 if (userPiece.x < astroid3.x + 16 && userPiece.x + 16  > astroid3.x &&
 		                userPiece.y < astroid3.y + 16 && userPiece.y + 16 > astroid3.y) {
-                    lives -= 1;
+                    lives--;
                     astroid3.x = 600;
                 }
                 
                 if(lives == 0){
                     game.stop();
+                    // Alert User and then reload page to replay
+                    if(!alert('GAME OVER')){window.location.reload();}
+                    
                 }
             }
             
